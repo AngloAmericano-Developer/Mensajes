@@ -1,5 +1,5 @@
 function filterModalAdmin(){
-    $("#content").load("views/filterModal.html", async function () {
+    $("#content").load("views/filterModal.html?v=1.0", async function () {
         try {
             var data = await getProfile();
             var perfil = data["response"];

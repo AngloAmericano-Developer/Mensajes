@@ -11,7 +11,7 @@ class CardView {
         this.init();
     }
     init() {
-        $(`${this.section}`).load("views/card.html", () => {
+        $(`${this.section}`).load("views/card.html?v=1.0", () => {
             $(this.section+ ' .spinner-overlay').removeClass('d-none');
             this.setupContent();
         })
@@ -149,7 +149,7 @@ class CardBody {
             this.addEventClick(data[0].Cod_Tipo_Mensaje); 
         }
         if(this.Cardsection == "#section_one .part_four") {
-            $("#modalFilter").load("views/filterMensagge.html", function (){
+            $("#modalFilter").load("views/filterMensagge.html?v=1.0", function (){
                 insertFilet();
             });
         }

@@ -1,5 +1,5 @@
 function ViewsnewsTracingMessage(){
-	$("#content").load("views/traicingMessages.html",function(){
+	$("#content").load("views/traicingMessages.html?v=1.0",function(){
 		
 		$("#tableContent").children().remove();
 		$("#btnGenerate").removeAttr('disabled');
@@ -392,7 +392,7 @@ function consultQuejas_jef(fechainicial,fechafinal,selected,secciones,satisfacc)
 
 
 function ViewsTracingMessageTransport(){
-	$("#content").load("views/traicingMessTransp.html",function(){
+	$("#content").load("views/traicingMessTransp.html?v=1.0",function(){
 
 		var tableCoord = "";
 
@@ -560,7 +560,7 @@ function exportTableToExcelTra(table,tipo){
 
 
 function ViewstracingMesJefeNs(){
-	$("#content").load("views/traicingMessJef.html",function(){
+	$("#content").load("views/traicingMessJef.html?v=1.0",function(){
 		
 		let tipojefe = gettipojef()
 		$.when(tipojefe).done(function(list){
@@ -932,7 +932,7 @@ function modalRespuestLider(Message,destinatar){
 
 function modalRespuesta(objectMessage){
 		
-	$("#bodyTagLarge").load("views/adminView/modalMesagesTransp.html",function(){
+	$("#bodyTagLarge").load("views/adminView/modalMesagesTransp.html?v=1.0",function(){
 
 			let destinatario = objectMessage["id_destinat"]
 			$("#titleModalLarge").text("Mensaje N° "+objectMessage["Num"]+": "+objectMessage["Tema"]);

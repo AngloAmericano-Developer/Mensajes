@@ -1,5 +1,5 @@
 function ViewNewsQuejas(){
-	$("#content").load("views/quejas.html",function(){
+	$("#content").load("views/quejas.html?v=1.0",function(){
 		$("#table_quej2").append("<h5 class='alert alert-light table-gradient text-dark'><p class='text-dark consul text-center'>Para consultar el mensaje, dé clic en el texto del estado.Solo se evidenciaran los mensajes que no se han contestado , si desea verlos mensajes respondidos seleccione la siguiente opcion <p><div class='form-check form-switch text-center justify-content-center  d-flex align-items-center'><input class='form-check-input text-center' role='switch'  type='checkbox' onclick='checkQuejas()' id='checktod'/><label class='form-check-label text-dark text-center' for='flexSwitchCheckDefault'>Ver todos los mensajes</label> </div></h5>");
 		var tipo=1;
 		$("#table_quej").html(`<div id="spinner-loading2" class="spinner-loading"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Cargando...</div>`);
@@ -287,7 +287,7 @@ function redirrecionarQuejas(num,motivo){
 
 function modalQuejas(message){
 	console.log(message);
-	$("#bodyTagLarge").load("views/adminView/modalQuejasUpdate.html",function(){
+	$("#bodyTagLarge").load("views/adminView/modalQuejasUpdate.html?v=1.0",function(){
 		$("#titleModalLarge").text("Actualizacion de Datos");
 		$("#titleModalLarge").css('text-align', 'center');
 		cargueMotivo();

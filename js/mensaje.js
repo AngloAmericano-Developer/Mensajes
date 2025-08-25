@@ -1,5 +1,5 @@
 function ViewNewsMessag(){
-	$("#content").load("views/mensajes.html",async function (){
+	$("#content").load("views/mensajes.html?v=1.0",async function (){
 		try {
 			$("#table_titulo").append(`<h5 class='card-header tittleIcon d-flex justify-content-between align-items-center text-white'>Para consultar el mensaje, dé clic en el texto del estado.Solo se evidenciaran los mensajes que no se han contestado , si desea verlos mensajes respondidos seleccione la siguiente opción</h5>
 				<div class='form-check form-switch text-center justify-content-center  d-flex align-items-center'>

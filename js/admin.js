@@ -1,6 +1,4 @@
 var host ="http://localhost:8000/";
-//Prueba 1 Cristian
-//ahora dani lo modifica
 function sleep(milliseconds) {
   var start = new Date().getTime();
   for (var i = 0; i < 1e7; i++) {
@@ -75,7 +73,7 @@ function modulesMain(){
 }
 
 function denyRead(){
-    $("#content").load("views/error.html",function(){
+    $("#content").load("views/error.html?v=1.0",function(){
         $("#content_error").addClass('text-danger');
         $("#content_error").text("UPS!!! no tienes permisos para ver esta sección. No seas curioso...");
     });
@@ -83,7 +81,7 @@ function denyRead(){
 
 function logged_area(){
     $(".body_").children().remove();
-    $(".body_").load("views/body.html",function(){
+    $(".body_").load("views/body.html?v=1.0",function(){
        
         get_permission(host).done(function(response){
             if(response['response'].length > 0){
@@ -99,8 +97,8 @@ function logged_area(){
         });
         modulesMain();
   
-       $("#modalLargeView").load("views/modalLarge.html");
-        $("#modalView").load("views/modalObs.html");
+       $("#modalLargeView").load("views/modalLarge.html?v=1.0");
+        $("#modalView").load("views/modalObs.html?v=1.0");
         $(".item").click(function(){
             $(".nav-item").removeClass("active animated flip");
             $(this).parent().addClass("active animated flip");

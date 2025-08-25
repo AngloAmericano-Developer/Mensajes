@@ -266,7 +266,7 @@ function classTipeMessage (Type) {
 function recipient_replacement(tipo_mensaje,codigo){
     $("#titleModalLarge").text(" Cambio de destinatario" );
     $("#bodyTagLarge").children().remove();
-    $("#bodyTagLarge").load("views/adminView/modalUpdateDestin.html", function () {
+    $("#bodyTagLarge").load("views/adminView/modalUpdateDestin.html?v=1.0", function () {
         consultadestinatario(codigo)
         buscardestinata(tipo_mensaje,codigo,"selectdestint");
         $("#btnModalLarge").removeClass("d-none");
@@ -414,7 +414,7 @@ function createCardReassing (div,data,img) {
     return new Promise((resolve, reject) => {
         try {
             var image = (img == "")?"SIN FOTO":"data:image/jpeg;base64,"+img.foto;
-            $(`${div}`).load("views/TempleteReassing.html", function(){
+            $(`${div}`).load("views/TempleteReassing.html?v=1.0", function(){
                 const container = $(this);
                 var classT = classTipeMessage (data.Tipo_Mensaje);
                 container.find("#student-img").attr("src",image)
@@ -453,7 +453,7 @@ function createCardToAnswer(div, dataList, img) {
         try {
             $(div).html(""); 
             const image = (img == "") ? "SIN FOTO" : "data:image/jpeg;base64," + img.foto;
-            $.get("views/TempleteToAnswer.html", function (templateHtml) {
+            $.get("views/TempleteToAnswer.html?v=1.0", function (templateHtml) {
                 const $template = $(templateHtml);
                 const $header = $template.find(".d-flex.align-items-start").clone();
                 const $body = $template.find(".card-body .mensajeBody").clone();
@@ -642,7 +642,7 @@ function createCardComplaints(div, dataList, img) {
             $(div).html(""); 
             const image = (img == "") ? "SIN FOTO" : "data:image/jpeg;base64," + img.foto;
         
-            $.get("views/TempleteComplaints.html", async function (templateHtml) {
+            $.get("views/TempleteComplaints.html?v=1.0", async function (templateHtml) {
                 const $template = $(templateHtml);
                 const $card = $('<div class="card shadow-lg border-0 rounded-4 overflow-hidden mb-3 list-group my-3"></div>');
                 const $header = $template.find(".d-flex.align-items-start").clone();
@@ -920,7 +920,7 @@ function openModal(objectMessage, type) {
     // Configuración según el tipo
     let config = {
         mensajes: {
-            view: "views/adminView/modalMesages.html",
+            view: "views/adminView/modalMesages.html?v=1.0",
             resultFn: (num, desc) => resultMessages(num, desc),
             afterSave: () => ViewNewsMessag(),
             validate: () => {
@@ -932,7 +932,7 @@ function openModal(objectMessage, type) {
             }
         },
         quejas: {
-            view: "views/adminView/modalQuejas.html",
+            view: "views/adminView/modalQuejas.html?v=1.0",
             resultFn: (num, desc, just) => resultQueja(num, desc, just),
             afterSave: () => ViewNewsQuejas(),
             validate: () => {
