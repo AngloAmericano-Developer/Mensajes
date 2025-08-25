@@ -1,0 +1,90 @@
+<div class="container p-2">
+
+	<div class="row text-center p-3">
+
+		<div class="col-md-12">
+
+			<label  ><span class="label label-default font-weight-bold">Estudiante</span></label><br>
+
+			<label  class="label label-default font-weight-bold"  id="lbstudent"></label><br>
+
+			<label  ><span class="label label-default font-weight-bold">Mensaje</span><br></label>
+
+			<label   id="lbmensage"></label>	
+			
+		</div>
+	</div>
+
+	<div class="row text-center p-3">
+
+		<div class="col-md-12" id="">
+			
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" name="justificada" id="opt_as_1" value="2" />
+				<label class="form-check-label" for="inlineRadio1">Justificada</label>
+			  </div>
+			  
+			  <div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" name="justificada" id="opt_as_2" value="3" />
+				<label class="form-check-label" for="inlineRadio2">No Justificada</label>
+			  </div>
+			  
+	
+
+			<!-- 	
+				<label class="btn btn-outline-info btn-sm justificada" data-val="2" id="opt_as_1" ">
+					<input type="radio" name="justificada" id="btnJustif"   autocomplete="off"> Justificada
+				</label>
+				<label class="btn btn-outline-info btn-sm justificada" data-val="3" id="opt_as_2" ">
+					<input type="radio" name="justificada" id="btnNoJustif "  autocomplete="off"> No Justificada
+				   </label> -->
+		
+
+		</div>
+	</div>
+	<div class="row text-center p-3 d-none" id="divQuejas" >
+
+		<div class="col-md-12" id="">
+	
+			<div class="mb-3 mt-3">
+				<label for="number" class="form-label">Ruta:</label>
+				<input type="number" class="form-control" id="ruta" placeholder="Ruta" name="ruta">
+			</div>
+			<div class="mb-3 mt-3">
+				<label for="number" class="form-label">Motivo de la queja :</label>
+				<input type="text" class="form-control" id="motivoQueja" placeholder="Motivo" name="ruta">
+			</div>
+			<div class="mb-3 mt-3">
+				<label for="text" class="form-label">Comentarios Padres :</label>
+				<textarea class="form-control form-control-sm inputPlain" id="comentPadres" placeholder="Digite su respuesta ..." ></textarea>
+			</div>
+			<div class="mb-3 mt-3">
+				<label for="text" class="form-label">Comentarios Alumno :</label>
+				<textarea class="form-control form-control-sm inputPlain" id="comentAlumnos" placeholder="Digite su respuesta ..." ></textarea>
+			</div>
+			<div class="mb-3 mt-3">
+				<label for="email" class="form-label">Plan de Accion:</label>
+				<textarea class="form-control form-control-sm inputPlain" id="plaAccion" placeholder="Digite su respuesta ..." ></textarea>
+			</div>
+			<div class="mb-3 mt-3">
+				<label for="email" class="form-label">Fecha Limite:</label>
+				<input type="date" class="form-control" id="fechaLimite" placeholder="fechaLimite" name="fechaLimite">
+			</div>
+			
+		</div>
+	</div>
+	
+
+	<div class="row text-center p-3">
+
+		<div class="col-md-12">
+
+			<label class="text-center"><span class="label label-default font-weight-bold">Descripción Respuesta</span></label><br>
+
+			<textarea class="form-control form-control-sm inputPlain" id="description" placeholder="Digite su respuesta ..." rows="2"></textarea>
+
+		</div>
+
+	</div>
+
+</div>

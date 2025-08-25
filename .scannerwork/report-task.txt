@@ -1,0 +1,6 @@
+projectKey=MensajesNew
+serverUrl=http://localhost:9000
+serverVersion=25.8.0.112029
+dashboardUrl=http://localhost:9000/dashboard?id=MensajesNew
+ceTaskId=7056241b-79fe-45fa-aefa-f3d3ab48b56a
+ceTaskUrl=http://localhost:9000/api/ce/task?id=7056241b-79fe-45fa-aefa-f3d3ab48b56a

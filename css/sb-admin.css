@@ -1,0 +1,417 @@
+:root {
+    --primary-color: 
+#212529;
+    --secondary-color: 
+#004080;
+    --accent-color: 
+#0066cc;
+    --success-color: 
+#28a745;
+    --warning-color: 
+#ffc107;
+    --danger-color: 
+#dc3545;
+    --light-bg: 
+#f8f9fa;
+    --border-color: 
+#dee2e6;
+}
+/* * {
+  outline: 1px solid red;
+} */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-y: auto;
+  background-color: var(--light-blue);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    box-shadow: 0 2px 10px rgba(0, 44, 93, 0.3);
+} 
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.main-container {
+  margin-top: 2rem;
+  /* margin-bottom: 2rem; */
+  height: auto; 
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 1rem;
+} 
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+
+.card-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    border: none;
+    padding: 1.5rem;
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.card-header h4 {
+    margin: 0;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-tabs {
+    border: none;
+    background: var(--light-bg);
+    border-radius: 10px;
+    padding: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    margin: 0 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link.active {
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 44, 93, 0.3);
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+    background: rgba(0, 44, 93, 0.1);
+    transform: translateY(-2px);
+}
+
+        .badge-counter {
+            font-size: 0.9rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .badge-messages {
+            background: var(--success-color);
+        }
+
+        .badge-complaints {
+            background: var(--danger-color);
+        }
+
+        .badge-total {
+            background: var(--accent-color);
+        }
+
+        .message-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .message-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            border-color: var(--accent-color);
+        }
+
+        .message-item.active {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+        }
+
+        .message-header {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+        }
+
+        .student-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+        }
+
+        .student-info h6 {
+            margin: 0;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .student-info small {
+            color: #6c757d;
+        }
+
+        .message-badges {
+            margin-left: auto;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-redirigido {
+            background: #ffeaa7;
+            color: #d63031;
+        }
+
+        .status-mensaje {
+            background: #74b9ff;
+            color: white;
+        }
+
+        .message-details {
+            background: white;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .detail-section {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .detail-section:first-child {
+            border-top: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .detail-value {
+            color: #495057;
+            text-align: right;
+        }
+
+        .message-content {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-modern {
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-reassign {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #0052cc 100%);
+            color: white !important;
+        }
+
+        .btn-excel {
+            background: linear-gradient(135deg, var(--success-color) 0%, #098313 100%);
+            color: white !important;
+        }
+
+        .btn-closes {
+            background: linear-gradient(135deg, #d94250ab 0%, #c54d4d 100%);
+            color: white !important;
+        }
+
+        .btn-copy {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white !important;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        
+        @media (max-width: 768px) {
+             .main-container {
+                    margin-top: 1rem;
+                    padding: 0 0.5rem;
+                    flex-direction: column;
+                }
+
+
+            .card-header {
+                padding: 1rem;
+            }
+
+            .card-header h4 {
+                font-size: 1.1rem;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+                padding: 0.25rem;
+            } 
+
+            .nav-tabs .nav-link {
+                margin: 0.125rem 0;
+                text-align: center;
+            }
+
+            .message-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .student-info {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                width: 100%;
+            }
+
+            .message-badges {
+                margin-left: 0;
+                align-self: stretch;
+                justify-content: flex-end;
+            }
+
+
+            .detail-value {
+                text-align: left;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-modern {
+                justify-content: center;
+            }
+
+            .badge-counter {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.6rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .card-header h4 {
+                font-size: 1rem;
+            }
+
+            .student-avatar {
+                width: 40px;
+                height: 40px;
+            }
+
+            .message-item {
+                margin-bottom: 0.75rem;
+            }
+
+            .detail-section {
+                padding: 1rem;
+            }
+        }
+
+        
+        .collapse {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .collapsing {
+            transition: height 0.3s ease-in-out;
+        }
+
+
+.special[data-special = "REDIRIGIDO"] {
+  background-color: var(--bs-danger-bg-subtle);
+}
+
+.special[data-special = "CONSULTADO"] {
+  background-color: var(--bs-primary-bg-subtle);
+}
+
+.special[data-special = "ENVIADO"] {
+  background-color: var(--bs-warning-bg-subtle) !important;
+}
+ 
+.tipoMensaje[data-tipoM = "Mensaje"] {
+  background-color: var(--bs-warning-bg-subtle) !important;
+}
+
+.special[data-special = "CERRADO -REDIRECCIONADO"] {
+  background-color: var(--bs-success-bg-subtle);
+}
+
+.special[data-special = "EN TRAMITE"] {
+  background-color: #fd7e1496;
+}
+
+.special[data-special = "TRAMITADO"] {
+  background-color: var(--bs-success-bg-subtle);
+}
+
+.td-expanded {
+   width: 700px !important;
+}
+
+.td-collapsed {
+   width: auto !important;
+}

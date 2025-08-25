@@ -1,0 +1,96 @@
+<div class="card shadow-lg border-0 rounded-4 overflow-hidden mb-3 list-group my-3">
+    <div class="d-flex align-items-start gap-3">
+        <div class="text-start"><img height="170" width="120" src="" class="rounded-start" alt="imagen" id="student-img"></div>
+        <div class="text-start">
+            <h5 class="card-title">Estudiante: <span id="student-name"></span></h5>
+            <label class="card-text label-text"><b>Codigo de Estudiante: </b><span id="student-code"> </span> - <b> Codigo de Mensaje: </b><span id="text-code"> </span></label><br>
+            <label class="card-text label-text"><b>Curso: </b><span id="student-course"></span></label><br>
+            <label class="card-text label-text"><b>Fecha: </b><span id="student-date"> </span><b> Hora: </b><span id="student-hour"> </span></label><br>
+            <label class="card-text label-text"><b>Mensaje: </b><span id="textmensaje"></span></label><br>
+            <label class="card-text label-text"><b>Proceso: </b><span id="textproceso"></span></label><br>
+            <label class="card-text label-text"><b>Tipo de justificación: </b><span id="textjustificacion"></span></label>
+        </div><span class="position-absolute top-0 end-0 me-2 mt-2" id="student-clasification"></span>
+    </div>
+    <div class="card-body">
+        <div class="row mensajeBody">
+            <div class="col-12">
+                <table class="table table-bordered table-hover table-striped text-center align-middle">
+                    <tbody>
+                        <tr>
+                            <th class="text-start"><i class="fas fa-envelope"></i> Asunto:</th>
+                            <td id="textasunto"></td>
+                            <th class="text-start"><i class="fas fa-user"></i> Destinatario: </th>
+                            <td colspan="3" id="textdestinatario"></td>
+                            <th class="text-start "><i class="fas fa-comment"></i> Estado</th>
+                            <td id="EstadoRevision" class="special"> </td>
+                        </tr>
+                        <tr>
+                            <th class="text-start"><i class="fas fa-calendar"></i> Fecha de revisión:</th>
+                            <td id="FechaRevision"> </td>
+                            <th class="text-start"><i class="fas fa-stopwatch"></i> Hora de revisión:</th>
+                            <td id="HoraRevision"> </td>
+                            <th class="text-start"><i class="fas fa-calendar"></i> Fecha de respuesta:</th>
+                            <td id="FechaRespuesta"> </td>
+                            <th class="text-start"><i class="fas fa-stopwatch"></i> Hora de respuesta:</th>
+                            <td id="HoraRespuesta"> </td>
+                        </tr>
+                        <tr id="divredirigido" class=""> 
+                            <th class="text-start" id="textstatus"></th>
+                            <td colspan="7"><textarea id="textredirigido"  class="form-control" disabled="true" rows="10"></textarea> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row mensajeBodyTwo">
+            <div class="col-12">
+                <table class="table table-bordered table-hover table-striped text-center align-middle">
+                    <tbody>
+                        <tr>
+                            <th class="comment-parent text-start"><i class="fas fa-user"></i> Comentarios Padres: </th>
+                            <td colspan="2"> <textarea id="comment-parent" disabled="disabled" class="form-control" rows="3"></textarea></td>
+                            <th class="comment-student text-start"><i class="fas fa-user-graduate"></i> Comentarios Alumno: </th>
+                            <td colspan="2"> <textarea id="comment-student" disabled="disabled" class="form-control" rows="3"></textarea></td>
+                        </tr>
+                        <tr>
+                            <th class="plan-action text-start"><i class="fas fa-tasks"></i> Plan de Accion: </th>
+                            <td colspan="5" ><textarea id="plan-action" disabled="disabled" class="form-control" rows="4"></textarea></td>
+                        </tr>
+                        <tr>
+                            <th class="date-limit text-start"><i class="fas fa-calendar-alt"></i> Fecha Limite: <span></span></th>
+                            <td id="date-limit" > </td>
+                            <th class="date-gestion"><i class="fas fa-tasks"></i> Tiempo Gestión(Plan de accion)</th>
+                            <td id="date-gestion"></td>
+                            <th class="text-complaints text-start"><i class="fas fa-user"></i> Motivo de queja solo aplica para Trasporte: </th>
+                            <td id="text-complaints"></td>
+                        </tr>
+                        <tr class="rowSatisfactionI">
+                            <th class="satisfactionI text-start"><i class="fas fa-smile"></i> Nivel de Satisfacción<span></span></th>
+                            <td id="satisfactionI" > </td>
+                            <th class="date-SatisfactionI text-start"><i class="fas fa-calendar-alt"></i> Fecha de registro</th>
+                            <td id="date-SatisfactionI"></td>
+                            <th class="coment-SatisfactionI text-start"><i class="fas fa-comment-alt"></i> Comentario </th>
+                            <td style="width: 40%;"><textarea id="coment-SatisfactionI" disabled="disabled" class="form-control" rows="2"></textarea></td>
+                        </tr>
+                        <tr class="rowSatisfactionII d-none">
+                            <th class="satisfactionII text-start"><i class="fas fa-smile"></i> Nivel de Satisfacción 2<span></span></th>
+                            <td id="satisfactionII" > </td>
+                            <th class="date-SatisfactionII text-start"><i class="fas fa-calendar-alt"></i> Fecha de registro 2</th>
+                            <td id="date-SatisfactionII"></td>
+                            <th class="coment-SatisfactionII text-start"><i class="fas fa-comment-alt"></i> Comentario 2</th>
+                            <td  style="width: 40%;"><textarea id="coment-SatisfactionII" disabled="disabled" class="form-control" rows="2"></textarea></td>
+                        </tr>
+                        <tr>
+                            <th class="coment-Calidad text-start"><i class="fas fa-comments"></i> Comentarios Coordinador de Calidad </th>
+                            <td colspan="5" ><div class="input-group"><textarea id="coment-Calidad" class="form-control" rows="2"></textarea><button class="btn btn-outline-info" id="btn-comment" type="button"><i class="fas fa-comment-alt"></i> Agragar Comentario</button></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-end ">
+        <button class="btn btn-outline-info d-none" id="btnSendSatistaction"><i class="fas fa-paper-plane"></i> Enviar Calificación</button>
+        <button class="btn btn-modern btn-closes" id="btnclosecomplaints"><i class="fas fa-times"></i> Cerrar queja</button>
+    </div>
+</div>

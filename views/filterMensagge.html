@@ -1,0 +1,87 @@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="height: 90vh;">
+  <div class="offcanvas-header card-header  text-white">
+    <h5 id="offcanvasRightLabel">Seleccione los filtros deseados</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <form class="row g-3 needs-validation card" novalidate>
+        <dt class="">
+            <label for="Filter-Name" class="form-label">Nombre de estudiante</label>
+            <input type="text" class="form-control Filter" id="Filter-Name">
+        </dt>
+        <dt class="">
+            <label for="Filter-Menssage" class="form-label">Mensaje</label>
+            <textarea type="text" class="form-control Filter" id="Filter-Menssage" rows="3"></textarea>
+        </dt>
+        <dt class="">
+            <label for="Filter-Code" class="form-label">Codigo de estudiante</label>
+            <input type="number" class="form-control Filter" id="Filter-Code" >
+        </dt>
+         <dt class="">
+            <label for="Filter-Code-Menssage" class="form-label">Codigo del mensaje</label>
+            <input type="number" class="form-control Filter" id="Filter-Code-Menssage" >
+        </dt>
+        <dt class="">
+            <div class="input-group mb-3">
+                <div class="col-6">
+                    <label for="Filter-Grade" class="form-label">Grado</label>
+                    <select class="form-select form-select-sm Filter-Grade Filter" aria-label="form-select-sm example" id="Filter-Grade"></select>
+                </div>
+                <div class="col-6">
+                    <label for="Filter-Curse" class="form-label">Curso</label>
+                    <select class="form-select form-select-sm Filter-Curse Filter" aria-label=".form-select-sm example" id="Filter-Curse">
+                        <option selected value="--">--</option>
+                    </select>
+                </div>
+            </div>
+        </dt>
+        <dt class="card">
+            <label class="form-label mb-3">Rango de Fechas</label>
+            <div class="input-group mb-3">
+                <div class="col-6">
+                    <label for="Filter-Reg-Initial" class="form-label">Registro Inicial</label>
+                    <input type="date" class="form-control Filter" id="Filter-Reg-Initial" >
+                </div>
+                <div class="col-6">
+                    <label for="Filter-Reg-Final" class="form-label">Registro Final</label>
+                    <input type="date" class="form-control Filter" id="Filter-Reg-Final" >
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <div class="col-6">
+                    <label for="Filter-Revision-Initial" class="form-label">Revisión Inicial</label>
+                    <input type="date" class="form-control Filter" id="Filter-Revision-Initial" >
+                </div>
+                <div class="col-6">
+                    <label for="Filter-Revision-Final" class="form-label">Revisión Final</label>
+                    <input type="date" class="form-control Filter" id="Filter-Revision-Final" >
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <div class="col-6">
+                    <label for="Filter-Answer-Initial" class="form-label">Respuesta Inicial</label>
+                    <input type="date" class="form-control Filter" id="Filter-Answer-Initial" >
+                </div>
+                <div class="col-6">
+                    <label for="Filter-Answer-Final" class="form-label">Respuesta Final</label>
+                    <input type="date" class="form-control Filter" id="Filter-Answer-Final" >
+                </div>
+            </div>
+        </dt>
+        <dt class="mb-3"><div id="Type-Destinatario"></div></dt>
+        <div class="row">
+            <div class="col-6 mb-3" id="Type-Mesagge"></div>
+            <div class="col-6 mb-3" id="Type-State"></div>
+            <div class="col-6 mb-3" id="Type-Affair"></div>
+            <div class="col-6 mb-3" id="Type-Category"></div>
+            <div class="col-6 mb-3" id="Type-Satistaction"></div>
+            <div class="col-6 mb-3" id="Type-Topics"></div>
+            <div class="col-6 mb-3" id="Type-Process"></div>  
+        </div>
+
+        <div class="card-footer text-end">
+            <button class="btn btn-modern btn-reassign" type="button" id="filter-button"><i class="fas fa-filter"></i> Filtrar</button>
+        </div>
+        </form>
+  </div>
+</div>

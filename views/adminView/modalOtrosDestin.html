@@ -1,0 +1,39 @@
+<div class="container p-2">
+
+	<div class="card text-center mx-auto mt-3">
+
+		<div class="row text-center p-3">
+
+			<div class="col-md-12">
+
+				<label  ><span class="label label-default font-weight-bold">Destinatario Remplazo</span><br></label>
+				<div class="col-md-12 col-sm-12 row text-center" id="desti">    
+					<div id="selectdestOtros"></div>
+				</div> 
+				<!--<div class="input-group mb-3">
+				<input type="text" class="form-control" id="btndestinName" aria-label="" placeholder="Name" placeholder="Name" aria-describedby="button-addon2">
+				<input type="text" class="form-control" id="btndestinApellid" aria-label="" placeholder="Surname"  aria-describedby="button-addon2">
+				<button class="btn btn-outline-secondary" onclick="buscardestinata()" type="button" id="btnbuscardest">Buscar</button>
+				</div>
+				<div id="select"></div>-->
+				<button type="button" id="btncargarOtros" onclick="cargarDestin()" class="btn btn-light" disabled>Cargar</button>
+			</div>
+
+		</div>
+
+	</div>
+	<div class="card text-center mx-auto mt-3"></div>
+	<div class="row text-center p-3">
+		<div class="col-md-12 d-none" id="tablagestion">
+			<label  ><span class="label label-default font-weight-bold">Gestion  Destinatarios </span><br></label>
+			<div >
+			<table border='1' align='center' class = 'table table-responsive table-hover table-sm table-bordered table-striped animated fadeIn' id='table_destinat' style='font-size:14px;'><thead class='thead-active text-center'><tr><th class='title' scope='col' style='text-align: center; vertical-align: middle;'>ID</th><th class='title' scope='col' style='text-align: center; vertical-align: middle;'>NOMBRE</th></thead>
+			<tbody id="tabledestin">
+
+			</tbody>
+			</table>
+			</div>		
+		</div>
+	</div>
+
+</div>

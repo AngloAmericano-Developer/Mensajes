@@ -1,0 +1,47 @@
+<div class="card shadow-lg border-0 rounded-4 overflow-hidden mb-3 list-group my-3">
+    <div class="d-flex align-items-start gap-3">
+        <div class="text-start"><img height="170" width="120" src="" class="rounded-start" alt="imagen" id="student-img"></div>
+        <div class="text-start">
+            <h5 class="card-title">Estudiante: <span id="student-name"></span></h5>
+            <label class="card-text label-text"><b>Codigo de Estudiante: </b><span id="student-code"> </span> - <b> Codigo de Mensaje: </b><span id="text-code"> </span></label><br>
+            <label class="card-text label-text"><b>Curso: </b><span id="student-course"></span></label><br>
+            <label class="card-text label-text"><b>Fecha: </b><span id="student-date"> </span><b> Hora: </b><span id="student-hour"> </span></label><br>
+            <label class="card-text label-text"><b>Mensaje: </b><span id="textmensaje"></span></label><br>
+            <label class="card-text label-text"><b>Proceso: </b><span id="textproceso"></span></label><br>
+        </div><span class="position-absolute top-0 end-0 me-2 mt-2" id="student-clasification"></span>
+    </div>
+    <div class="card-body">
+        <div class="row mensajeBody">
+            <div class="col-12">
+                <table class="table table-bordered table-hover table-striped text-center align-middle">
+                    <tbody>
+                        <tr>
+                            <th class="text-start"><i class="fas fa-envelope"></i> Asunto:</th>
+                            <td id="textasunto"></td>
+                            <th class="text-start"><i class="fas fa-user"></i> Destinatario: </th>
+                            <td colspan="3" id="textdestinatario"></td>
+                            <th class="text-start "><i class="fas fa-comment"></i> Estado</th>
+                            <td id="EstadoRevision" class="special"> </td>
+
+                        </tr>
+                        <tr>
+                            <th class="text-start"><i class="fas fa-calendar"></i> Fecha de revisión:</th>
+                            <td id="FechaRevision"> </td>
+                            <th class="text-start"><i class="fas fa-stopwatch"></i> Hora de revisión:</th>
+                            <td id="HoraRevision"> </td>
+                            <th class="text-start"><i class="fas fa-calendar"></i> Fecha de respuesta:</th>
+                            <td id="FechaRespuesta"> </td>
+                            <th class="text-start"><i class="fas fa-stopwatch"></i> Hora de respuesta:</th>
+                            <td id="HoraRespuesta"> </td>
+                           
+                        </tr>
+                        <tr id="divredirigido" class=""> 
+                            <th class="text-start" id="textstatus"></th>
+                            <td colspan="7"><textarea id="textredirigido"  class="form-control" disabled="true" rows="10"></textarea> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

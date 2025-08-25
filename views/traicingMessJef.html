@@ -1,0 +1,246 @@
+
+
+<br>
+<div class="container animated zoomIn mt-5">
+	<div class="position-absolute top-0 end-0" style="z-index: 8">
+		<div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+		  <div id="header" class="">
+			<i id="icono" class=""></i>
+			<strong id="titulotoast" class="me-auto"></strong>
+			<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+		  </div>
+		  <div class="toast-body">
+			<strong id="mensajetoast" class="me-auto"></strong>
+		  </div>
+		</div>
+	  </div>
+	<div class="card text-center mx-auto mt-3">
+		<div class="card-header" >
+			<div class="row">
+				<div class="col-md-2">
+					<i class="fa fa-clipboard fa-lg" aria-hidden="true"></i>
+				</div>
+				<div class="col-md-8">
+					<label class="h6">Gestion y Seguimiento de  Mensajes </label>
+				</div>
+				<div class="col-md-2">
+					<i class="fa fa-clipboard fa-lg" aria-hidden="true"></i>
+				</div>
+			</div>
+		</div>
+		<form id="formReports" autocomplete="off">
+			<div class="form-group">
+			<div class="card-block" >
+			<div class="row p-3 divReport">
+			<div class="col-md-1">		
+				
+			</div>	
+			<div class="col-md-2">
+					<label class="h7">Tipo Mensajes</label>    
+					<select id="selecTipo" class="form-select" aria-label="Default select example">
+						<option value="" selected>Seleccione la consulta a realizar </option>
+						<option value="mensajes">Mensajes</option>
+						<option value="quejas">Quejas</option>
+					  </select>
+			</div>
+			<div class="col-md-2">
+				<label class="h7">Sección</label>    
+							<select id="selecSecc" class="form-select" aria-label="Default select example">
+								<option value="" selected>Seleccione la seccion  </option>
+								<option value="pre">Preescolar</option>
+								<option value="pri">Primaria</option>.
+								<option value="bto">Bachillerato</option>
+							  </select>
+			</div>
+			<div class="col-md-2">
+				<label class="h7">Fecha Inicio </label>    
+				<input class="form-control form-control-sm " type="datetime-local" id="dateTraicingIni">
+			</div>
+			<div class="col-md-2">
+				<label class="h7">Fecha Final  </label>    
+				<input class="form-control form-control-sm " type="datetime-local" id="dateTraicingFin">
+			</div>
+			<div class="col-md-2 aling-center">
+				<div class="form-check form-check-inline">
+					<label class="h7">Nivel Satisfaccion</label>  <br>
+					<input id="chekNivReg" class="form-check-input " type="checkbox" value="NVR" ></input>
+					<label class="form-check-label" for="inlineCheckbox2">Regular-Malo</label>
+
+				</div>
+			</div>
+			<div class="col-md-1">		
+				
+			</div>
+    </div>
+  </div>
+</div>
+<div class="col-md-12 ">
+	<table class="table table-bordered"  >
+		<thead>
+		<tr style="height: 18px;">
+		<th  style="width: 100%; height: 18px;" colspan="5">Seleccione el filtro</td>
+		</tr>
+
+
+		<tr style="height: 18px;">
+		<th class="d-none" id="labeljefe" style="width: 14.1455%; height: 18px; text-align: center;">
+			<div>
+			<div>Jefes</div>
+			</div>
+		</th >
+		<th  class="d-none" id="labeldocen"   style="width: 20.633%; height: 18px; text-align: center;">
+			<div>
+			<div>Docentes</div>
+			</div>
+		</th >
+		<th  class="d-none" id="labeldirect"    style="width: 22.8481%; height: 18px; text-align: center;">
+			<div>
+			<div>Directores de Curso</div>
+			</div>
+		</th >
+		<th class="d-none" id="labelConv"  style="width: 22.3734%; height: 18px; text-align: center;">
+			<div>
+			<div>&nbsp;Cordinadores de Convivencia/Convivencia</div>
+			</div>
+		</th >
+		<th class="d-none" id="labelAca"  style="width: 22.3734%; height: 18px; text-align: center;">
+			<div>
+			<div>&nbsp;Cordinadores Academicos/Orden Academico</div>
+			</div>
+		</th >
+		<th class="d-none" id="labelPsico"  style="width: 20%; height: 18px; text-align: center;">
+			<div>
+			<div>&nbsp;Psicologas</div>
+			</div>
+		</th >
+		<th class="d-none" id="labelaliment" style="width: 20%; height: 18px; text-align: center;">
+			<div>
+			<div>&nbsp;Alimentos y Bebidas</div>
+			</div>
+		</th >
+		<th class="d-none" id="labelTrans" style="width: 20%; height: 18px; text-align: center;">
+			<div>
+			<div>&nbsp;Transporte-Salida de Instalaciones</div>
+			</div>
+		</th >
+		<th class="d-none" id="labelCart" style="width: 20%; height: 18px; text-align: center;">
+			<div>
+			<div>&nbsp;Cartera</div>
+			</div>
+		</th >
+		<th class="d-none" id="labelSiste" style="width: 20%; height: 18px; text-align: center;">
+			<div>
+			<div>&nbsp;Sistemas</div>
+			</div>
+		</th >
+		<th class="d-none" id="labelAdmis"  style="width: 20%; height: 18px; text-align: center;">
+			<div>
+			<div>&nbsp;Admisiones y Matriculas</div>
+			</div>
+		</th >
+		<th class="d-none" id="labelCalid" style="width: 20%; height: 18px; text-align: center;">
+			<div>
+			<div>&nbsp;Calidad</div>
+			</div>
+		</th >
+		<th class="d-none" id="labelCert" style="width: 20%; height: 18px; text-align: center;">
+			<div>
+			<div>&nbsp;Certificados</div>
+			</div>
+		</th >
+		<th class="d-none" id="labelEnf" style="width: 20%; height: 18px; text-align: center;">
+			<div>
+			<div>&nbsp;SST-Enfermeria</div>
+			</div>
+		</th >
+		<th class="d-none" id="labelMant" style="width: 20%; height: 18px; text-align: center;">
+			<div>
+			<div>&nbsp;Mantenimiento</div>
+			</div>
+		</th >
+
+		</tr>
+		</thead>
+		<tbody>
+		<tr style="height: 18px;">
+			<td id="tdjefe" class="d-none" style="width: 14.1455%; height: 18px;">
+			<div class="col-md-2 form-check form-check-inline"><input id="chekJefe" class="form-check-input " name="tipo[]" type="checkbox" value="JF" /> <label class="form-check-label" for="inlineCheckbox1"></label></div>
+			</td>
+			<td id="tddocent" class="d-none" style="width: 20.633%; height: 18px;">
+			<div class="col-md-2  form-check form-check-inline"><input id="chekDocente" class="form-check-input " name="tipo[]" type="checkbox" value="D" /> <label class="form-check-label" for="inlineCheckbox2"></label></div>
+			</td>
+			<td id="tddirect" class="d-none" style="width: 22.8481%; height: 18px;">
+			<div class="col-md-2  form-check form-check-inline"><input id="chekDirector" class="form-check-input " name="tipo[]" type="checkbox" value="DC" /> <label class="form-check-label" for="inlineCheckbox3"></label></div>
+			</td>
+			<td id="tdcorvi" class="d-none" style="width: 22.3734%; height: 18px;">
+			<div class="col-md-2  form-check form-check-inline"><input id="chekCord" class="form-check-input " name="tipo[]" type="checkbox" value="CC" /> <label class="form-check-label" for="inlineCheckbox2"></label></div>
+			</td>
+			<td id="tdaca" class="d-none" style="width: 22.3734%; height: 18px;">
+				<div class="col-md-2  form-check form-check-inline"><input id="chekCordAca" class="form-check-input " name="tipo[]" type="checkbox" value="CA" /> <label class="form-check-label" for="inlineCheckbox2"></label></div>
+			</td>
+			<td id="tdpsico" class="d-none" style="width: 20%; height: 18px;">
+			<div class="col-md-2  form-check form-check-inline"><input id="chekPsico" class="form-check-input " name="tipo[]" type="checkbox" value="P" /> <label class="form-check-label" for="inlineCheckbox3"></label></div>
+			</td>
+			<td id="tdalim" class="d-none" style="width: 20%; height: 18px;">
+				<div class="col-md-2  form-check form-check-inline"><input id="chekAlm" class="form-check-input  " name="tipo[]" type="checkbox" value="AL" /> <label class="form-check-label" for="inlineCheckbox3"></label></div>
+			</td>
+			<td id="tdtrans" class="d-none" style="width: 20%; height: 18px;">
+				<div class="col-md-2  form-check form-check-inline"><input id="chekTransp" class="form-check-input " name="tipo[]" type="checkbox" value="T" /> <label class="form-check-label" for="inlineCheckbox3"></label></div>
+			</td>
+			<td id="tdcart" class="d-none" style="width: 20%; height: 18px;">
+				<div class="col-md-2  form-check form-check-inline"><input id="chekCart" class="form-check-input " name="tipo[]" type="checkbox" value="F" /> <label class="form-check-label" for="inlineCheckbox3"></label></div>
+			</td>
+			<td id="tdsist" class="d-none" style="width: 20%; height: 18px;">
+				<div class="col-md-2  form-check form-check-inline"><input id="chekSist" class="form-check-input " name="tipo[]" type="checkbox" value="S" /> <label class="form-check-label" for="inlineCheckbox3"></label></div>
+			</td>
+			<td id="tdadm" class="d-none" style="width: 20%; height: 18px;">
+				<div class="col-md-2  form-check form-check-inline"><input id="chekAdmis" class="form-check-input " name="tipo[]" type="checkbox" value="AD" /> <label class="form-check-label" for="inlineCheckbox3"></label></div>
+			</td>			
+			<td id="tdcalid" class="d-none" style="width: 20%; height: 18px;">
+				<div class="col-md-2  form-check form-check-inline"><input id="chekCalid" class="form-check-input " name="tipo[]" type="checkbox" value="CAL" /> <label class="form-check-label" for="inlineCheckbox3"></label></div>
+			</td>
+			<td id="tdcert" class="d-none" style="width: 20%; height: 18px;">
+				<div class="col-md-2  form-check form-check-inline"><input id="chekCert" class="form-check-input " name="tipo[]" type="checkbox" value="CER" /> <label class="form-check-label" for="inlineCheckbox3"></label></div>
+			</td>
+			<td id="tdsst" class="d-none" style="width: 20%; height: 18px;">
+				<div class="col-md-2  form-check form-check-inline"><input id="cheksst" class="form-check-input " name="tipo[]" type="checkbox" value="SST" /> <label class="form-check-label" for="inlineCheckbox3"></label></div>
+			</td>
+			<td id="tdMan" class="d-none" style="width: 20%; height: 18px;">
+				<div class="col-md-2  form-check form-check-inline"><input id="chekMan" class="form-check-input " name="tipo[]" type="checkbox" value="MAN" /> <label class="form-check-label" for="inlineCheckbox3"></label></div>
+			</td>
+
+		</tr>
+		</tbody>
+		</table>
+
+  
+  </div>
+</div>
+
+
+			<div class="card-footer text-muted">
+				<div class="row">
+					<div class="col-md-12">
+						<button class="btn btn-info btn-sm" id="btnGenerate" disabled="disabled">Consultar</button>
+					</div>	
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="d-none" id ="contentReport" style="padding-top: 2%;">		
+				<div class="row">
+					<div class="col-md-12" id="tableContent" style="height: 450px;">
+					
+					</div>
+				</div>
+				<div class="card-footer text-muted">
+					<div class="row">
+					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

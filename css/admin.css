@@ -1,0 +1,231 @@
+:root {
+    --primary-blue: 
+#2c5aa0;
+    --secondary-blue: 
+#1e3a5f;
+    --light-blue: 
+#f8f9fa;
+}
+
+
+.header-nav {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+
+.section-header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: white;
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+
+.search-container {
+    /* position: relative; */
+    position: sticky;
+    margin-bottom: 1.5rem;
+    top: 0px;
+    z-index: 99;
+    padding: 0;
+    border-bottom: 1px solid #dee2e600;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    background: white;
+}
+
+table thead {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    background-color: white !important;
+}
+
+
+.search-container .form-control {
+    border-radius: 25px;
+    padding: 0.75rem 1rem 0.75rem 3rem;
+    font-size: 1rem;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+ 
+.search-container .form-control:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.25);
+}
+
+.search-icon {
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    z-index: 10;
+}
+
+.pagination-sticky {
+  position: sticky;
+  bottom: 0; /* Se pega abajo */
+  z-index: 98; /* menor que el search si es necesario */
+  background-color: white; /* Fondo sólido para evitar superposición */
+  padding: 0.5rem 0;
+   /* sombra superior */
+}
+
+
+ .messages-list, .details-panel {
+  height: calc(100vh - 230px); 
+  overflow-y: auto;
+} 
+.message-item {
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}  
+
+.message-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: var(--primary-blue);
+}
+
+.message-item.selected {
+    border-color: var(--primary-blue);
+    background: linear-gradient(135deg, #fff, #f8f9ff);
+}
+
+.badge-mensaje {
+    background: linear-gradient(135deg, #28a745, #20c997) !important;
+}
+
+.badge-queja {
+    background: linear-gradient(135deg, #dc3545, #fd7e14) !important;
+}
+
+.student-photo {
+    width: 120px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+} 
+
+.student-info {
+    background: linear-gradient(135deg, #fff, #f8f9ff);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.table-custom {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.table-custom th {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: white;
+    font-weight: 600;
+    border: none;
+}
+
+.table-custom td {
+    border-color: #e9ecef;
+    vertical-align: middle;
+}
+
+.status-consultado {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.status-pendiente {
+    background: linear-gradient(135deg, #ffc107, #fd7e14);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+
+
+
+.messages-list::-webkit-scrollbar,
+.details-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.messages-list::-webkit-scrollbar-track,
+.details-panel::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.messages-list::-webkit-scrollbar-thumb,
+.details-panel::-webkit-scrollbar-thumb {
+    background: var(--primary-blue);
+    border-radius: 10px;
+}
+
+.messages-list::-webkit-scrollbar-thumb:hover,
+.details-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-blue);
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+    
+   .messages-list {
+        height: 40vh;
+    }
+    
+    .details-panel {
+        height: 60vh;
+        border-left: none;
+        border-top: 1px solid #dee2e6;
+    } 
+}
+
+.spinner-overlay {
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.spinner-grow-lg {
+  width: 4rem;
+  height: 4rem;
+}
+
+
+#screen-blocker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.5); /* blanco opaco */
+  z-index: 9998;
+  display: none;
+}
