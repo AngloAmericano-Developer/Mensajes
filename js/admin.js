@@ -1,5 +1,6 @@
 var host ="http://localhost:8000/";
 //Prueba 1 Cristian
+//ahora dani lo modifica
 function sleep(milliseconds) {
   var start = new Date().getTime();
   for (var i = 0; i < 1e7; i++) {
