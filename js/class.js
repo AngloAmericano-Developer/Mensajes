@@ -1,3 +1,4 @@
+//otro nuevo mensjae
 let currentDataArray = []; 
 let customDataDataArray = []; 
 let cutomDataClosed = [];
