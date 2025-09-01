@@ -11,7 +11,7 @@ class CardView {
         this.init();
     }
     init() {
-        $(`${this.section}`).load("views/card.html?v=1.0", () => {
+        $(`${this.section}`).load("views/card.html?v=1.2", () => {
             $(this.section+ ' .spinner-overlay').removeClass('d-none');
             this.setupContent();
         })
@@ -71,37 +71,24 @@ class CardBody {
             case "#section_one .part_four":
                 //REVISAR PORQUE NO ESTOY SEGURO
                 paginaActual = this.pagination;
-                
                 if (this.customData || (currentDataArray.length != 0)) {
-                    
                     if(this.customData != null) {
                         customDataDataArray = this.customData;
                     }
                     if (this.customData == null) {
                         this.customData = customDataDataArray;
                     }
-
-
                     totalMensaje = this.messaggeTotal(this.customData,'quejas');
                     this.countNumber(totalMensaje);
-
-                    
                     paginaActual = (paginaActual == null)?1:paginaActual
-
                     var dataArray = (currentDataArray !=0 )?currentDataArray:this.customData["response"];
-                    
                     let mensajesPaginados = getPaginatedData(dataArray, paginaActual);
-
                     await this.renderTemplete(mensajesPaginados,totalMensaje,paginaActual,dataArray);
                     code = await this.fetchData(ToAnswerComplaints,mensajesPaginados[0].cod_mensaje)
                     await this.TempleteComplaints(code["response"])
-                
-
                 } else {
-                    
                     response = await this.fetchData(getTotalConsultas);
                     totalMensaje = response['response'][0];
-                    
                     this.countNumber(totalMensaje);
                     var data = await this.fetchData(getDataMessageTotal,paginaActual);
                     await this.renderTemplete(data["response"],totalMensaje,paginaActual );
@@ -112,10 +99,7 @@ class CardBody {
                     } else {
                         await this.TempleteComplaints(code["response"])
                     }
-                } 
-                
-                  
-               
+                }
                 break;
             default:
                 console.log(`No existe plantilla ${this.Cardsection}`)
@@ -149,7 +133,7 @@ class CardBody {
             this.addEventClick(data[0].Cod_Tipo_Mensaje); 
         }
         if(this.Cardsection == "#section_one .part_four") {
-            $("#modalFilter").load("views/filterMensagge.html?v=1.0", function (){
+            $("#modalFilter").load("views/filterMensagge.html?v=1.2", function (){
                 insertFilet();
             });
         }
