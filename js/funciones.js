@@ -134,7 +134,7 @@ function classTipeMessage (Type) {
 function recipient_replacement(tipo_mensaje,codigo){
     $("#titleModalLarge").text(" Cambio de destinatario" );
     $("#bodyTagLarge").children().remove();
-    $("#bodyTagLarge").load("views/adminView/modalUpdateDestin.html?v=1.2", function () {
+    $("#bodyTagLarge").load("views/adminView/modalUpdateDestin.html?v=1.3", function () {
         consultadestinatario(codigo)
         buscardestinata(tipo_mensaje,codigo,"selectdestint");
         $("#btnModalLarge").removeClass("d-none");
@@ -282,7 +282,7 @@ function createCardReassing (div,data,img) {
     return new Promise((resolve, reject) => {
         try {
             var image = (img == "")?"SIN FOTO":"data:image/jpeg;base64,"+img.foto;
-            $(`${div}`).load("views/TempleteReassing.html?v=1.2", function(){
+            $(`${div}`).load("views/TempleteReassing.html?v=1.3", function(){
                 const container = $(this);
                 var classT = classTipeMessage (data.Tipo_Mensaje);
                 container.find("#student-img").attr("src",image)
@@ -321,7 +321,7 @@ function createCardToAnswer(div, dataList, img) {
         try {
             $(div).html(""); 
             const image = (img == "") ? "SIN FOTO" : "data:image/jpeg;base64," + img.foto;
-            $.get("views/TempleteToAnswer.html?v=1.2", function (templateHtml) {
+            $.get("views/TempleteToAnswer.html?v=1.3", function (templateHtml) {
                 const $template = $(templateHtml);
                 const $header = $template.find(".d-flex.align-items-start").clone();
                 const $body = $template.find(".card-body .mensajeBody").clone();
@@ -510,7 +510,7 @@ function createCardComplaints(div, dataList, img) {
             $(div).html(""); 
             const image = (img == "") ? "SIN FOTO" : "data:image/jpeg;base64," + img.foto;
         
-            $.get("views/TempleteComplaints.html?v=1.2", async function (templateHtml) {
+            $.get("views/TempleteComplaints.html?v=1.3", async function (templateHtml) {
                 const $template = $(templateHtml);
                 const $card = $('<div class="card shadow-lg border-0 rounded-4 overflow-hidden mb-3 list-group my-3"></div>');
                 const $header = $template.find(".d-flex.align-items-start").clone();
@@ -787,7 +787,7 @@ function openModal(objectMessage, type) {
     // Configuración según el tipo
     let config = {
         mensajes: {
-            view: "views/adminView/modalMesages.html?v=1.2",
+            view: "views/adminView/modalMesages.html?v=1.3",
             resultFn: (num, desc) => resultMessages(num, desc),
             afterSave: () => ViewNewsMessag(),
             validate: () => {
@@ -799,7 +799,7 @@ function openModal(objectMessage, type) {
             }
         },
         quejas: {
-            view: "views/adminView/modalQuejas.html?v=1.2",
+            view: "views/adminView/modalQuejas.html?v=1.3",
             resultFn: (num, desc, just) => resultQueja(num, desc, just),
             afterSave: () => ViewNewsQuejas(),
             validate: () => {
@@ -859,4 +859,67 @@ function openModal(objectMessage, type) {
         $("#ModalLargeObs").modal("show");
         $('.modal-backdrop').remove();
     });
+}
+
+function btnUpdateState(object, id, estado_dest, tipojust = "", contexto = "QUEJA") {
+    try {
+        var style = '" position: relative; padding: 15px 10px 30px 10px;"';
+        var buttonupdate = "<div class='text-center' id='div" + id + "' style=" + style + ">";
+        var num = parseInt(atob(id));
+
+    
+        //var viewFn = contexto === "QUEJA" ? "ViewNewsQuejas()" : "ViewNewsMessag()";
+        var modalFn = contexto === "QUEJA" ? "modalMessaQuej" : "modalVistMessage";
+        var modalTramiteFn = contexto === "QUEJA" ? "modalQuejas" : "modalVistMessage";
+
+        if (object === "ENVIADO" || (object === "REDIRIGIDO" && estado_dest == 1) || (object === "EN TRAMITE" && estado_dest == 1)) {
+            var respos = sendMessage(num)
+            $when(respos).done(function (event){
+            console.log(event);
+            })
+            //eval(viewFn); // ejecuta la función según el contexto
+
+            buttonupdate += "<button type='button' id='btnEstado' class='btn btn'><i class='fa fa-eye fa-sm'></i> Enviado</button>";
+        }
+        else if (object === "CONSULTADO") {
+            buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' onclick='${modalFn}(${num})' 
+                            style='text-decoration: none;' id='btnEstado'>
+                            <i class='fa fa-eye fa-sm'></i> CONSULTADO <br> PENDIENTE <br> POR RESPONDER</button>`;
+        }
+        else if (object === "EN TRAMITE") {
+            if (estado_dest == 7 || (contexto === "MENSAJE" && estado_dest == 4)) {
+                buttonupdate += "<button class='btn btn-link text-dark bg-opacity-25' type='button' disabled id='btnEstado' style='text-decoration: none;'> <i class='fa fa-pen-to-square fa-lg'></i> EN TRAMITE/<br> CERRADO</button>";
+            } else {
+                if (contexto === "QUEJA" && tipojust === "Justificado") {
+                    buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' onclick='${modalTramiteFn}(${num})' style='text-decoration: none;'>
+                                    <i class='fa fa-pen-to-square fa-lg'></i> EN TRAMITE</button>`;
+                } else {
+                    buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' onclick='${modalFn}(${num})' style='text-decoration: none;'>
+                                    <i class='fa fa-pen-to-square fa-lg'></i> EN TRAMITE <br> PENDIENTE <br> POR RESPONDER</button>`;
+                }
+            }
+        }
+        else if (object === "TRAMITADO") {
+            buttonupdate += "<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' disabled style='text-decoration: none;'><i class='fa fa-check-circle fa-lg'></i> TRAMITADO</button>";
+        }
+        else if (object === "REDIRIGIDO") {
+            buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' disabled style='text-decoration: none;'>
+                            <i class='fa fa-reply-all fa-lg'></i> REDIRIGIDO</button>`;
+        }
+        else if (object === "REDIRECCIONADO") {
+            buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' onclick='${modalFn}(${num})' style='text-decoration: none;'>
+                            <i class='fa fa-undo fa-lg'></i> TRAMITADO</button>`;
+        }
+        else if (contexto === "MENSAJE" && object === "ENVIADO REDIRECCIÓNADO" && estado_dest == 7) {
+            buttonupdate += "<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' disabled style='text-decoration: none;'><i class='fa fa-undo fa-lg'></i> EN TRAMITE</button>";
+        }
+        else {
+            let modalOtro = contexto === "QUEJA" ? "modalMessaQuej" : "modalVistMessa";
+            buttonupdate += `<button type='button' onclick='${modalOtro}(${num})' id='btnEstado' class='btn btn'><i class='fa fa-eye fa-sm'></i> Otro</button>`;
+        }
+        buttonupdate += "</div>";
+        return buttonupdate;
+    } catch (error) {
+        console.error(error);
+    }
 }

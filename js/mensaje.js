@@ -1,5 +1,5 @@
 function ViewNewsMessag(){
-	$("#content").load("views/mensajes.html?v=1.0",async function (){
+	$("#content").load("views/mensajes.html?v=1.1", function (){
 		try {
 			$("#table_titulo").append(`<h5 class='card-header tittleIcon d-flex justify-content-between align-items-center text-white'>Para consultar el mensaje, dé clic en el texto del estado.Solo se evidenciaran los mensajes que no se han contestado , si desea verlos mensajes respondidos seleccione la siguiente opción</h5>
 				<div class='form-check form-switch text-center justify-content-center  d-flex align-items-center'>
@@ -10,29 +10,32 @@ function ViewNewsMessag(){
 			$("#table_circ").children().remove();
 			let table_nmessages="" ;
 			$("#table_mensaje").html(`<div id="spinner-loading2" class="spinner-loading"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Cargando...</div>`);
-			let responseMessage = await getMessage('1');
+			let responseMessage2 =  getMessage('1');
+			$.when(responseMessage2).done(function (responseMessage){
+				if (responseMessage["code"] == 200) {
+					table_nmessages = createTable1("mensajes",responseMessage["response"],false, true, 1,true);
+					$("#table_mensaje").children().remove();	
+					$("#table_mensaje").append(table_nmessages);
+					openMore();
+					$("tr").each(function() {
+						$(this).children("td:nth-child(3)").addClass('d-none');
+						$(this).children("td:nth-child(5)").addClass('text-left');
+						$(this).children("td:nth-child(7)").addClass('d-none');
+						$(this).children("td:nth-child(8)").addClass('d-none');
+						$(this).children("td:nth-child(16)").addClass('d-none');
+						$(this).children("td:nth-child(17)").addClass('d-none'); 
+					}); 
+					$("#table_mensaje").addClass('text-center table-responsive');	
+				}else if(responseMessage["code"] == 400) {
+					$("#table_mensaje").html(`<div><h5>No tienes mensajes pendientes</h5></div>`);
+				}
+				else if(responseMessage["response"]["code"] == 450){
+					alert("Su sesion ha caducado por favor cierre y vuela e ingrese , gracias");
+					location.href = "../index.html";
+				}
+			})
 			 
-			if (responseMessage["code"] == 200) {
-				table_nmessages = createTable1("mensajes",responseMessage["response"],false, true, 1,true);
-				$("#table_mensaje").children().remove();	
-				$("#table_mensaje").append(table_nmessages);
-				openMore();
-				 $("tr").each(function() {
-					$(this).children("td:nth-child(3)").addClass('d-none');
-				    $(this).children("td:nth-child(5)").addClass('text-left');
-					$(this).children("td:nth-child(7)").addClass('d-none');
-				    $(this).children("td:nth-child(8)").addClass('d-none');
-					$(this).children("td:nth-child(16)").addClass('d-none');
-				    $(this).children("td:nth-child(17)").addClass('d-none'); 
-				}); 
-				$("#table_mensaje").addClass('text-center table-responsive');	
-			}else if(responseMessage["code"] == 400) {
-				$("#table_mensaje").html(`<div><h5>No tienes mensajes pendientes</h5></div>`);
-			}
-			else if(responseMessage["response"]["code"] == 450){
-				alert("Su sesion ha caducado por favor cierre y vuela e ingrese , gracias");
-				location.href = "../index.html";
-			}
+
 		} catch (error) {
 			console.error(error);
 		}
@@ -104,7 +107,7 @@ function createTable1(id,array_,sections=false){
         table = table + "<th id='title"+index+"'>"+value+"</th>";
     });
 	table = table+ "</tr></thead><tbody>"
-	$.each(array_,function(key,value){
+	$.each(array_, function(key,value){
 		if(key != 'keys'){
 			var data = (typeof(value['DATA_VAL'])!=='undefined')?btoa(value['DATA_VAL']):btoa(key);
 			var estado_m = value['Estado'];
@@ -113,7 +116,7 @@ function createTable1(id,array_,sections=false){
             clase = "";
 			style = "vertical-align: middle";
             table = table +"<tr id='fila-"+data+"'><td class='number_' style='"+style+"'>"+dataTr+"</td>";
-			$.each(value,function(key_,value_){
+			$.each(value,async function(key_,value_){
 				var text = "";
 				if(key_ == 'Redirigir' ){
 					if(estado_m ==1 ||  estado_m ==2 || estado_m == 8){
