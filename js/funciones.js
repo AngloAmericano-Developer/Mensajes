@@ -1,5 +1,4 @@
-
-function cargarFiltrobusqueda(divID, datos) {
+    function cargarFiltrocheckbox(divID, datos) {
     if (!datos || datos.length === 0) {
         $(`#${divID}`).html("<p>No hay datos disponibles</p>");
         return;
@@ -8,19 +7,151 @@ function cargarFiltrobusqueda(divID, datos) {
     let contenido = "";
 
     // **Agregar input de búsqueda solo en Estudiantes y Destinatarios**
-        contenido += `<input type="text" class="form-control mb-2 filtro-busqueda" 
-                        placeholder="Buscar..." data-target="${divID}">`;
+    if (divID === "divEstudiantes" || divID === "divDestinatarios"  || divID === "selectdestint" || divID === "selectdestOtros") {
+        contenido += `<input type="text" class="form-control mb-2 filtro-checkbox" 
+                      placeholder="Buscar..." data-target="${divID}">`;
         contenido += `<div class="checkbox-container" style="display: none;"></div>`;
-    
+    } else if (divID === "divfecha") {
+        contenido += `<label><strong>Seleccione Rango de Fechas</strong></label>
+          <div class="mb-2">
+            <input type="date" id="fechaInicio" data-tipo="inicio" data-target="${divID}" class="form-control mb-2 filtro-fecha" placeholder="Desde">
+            <input type="date" id="fechaFin" data-tipo="fin" data-target="${divID}" class="form-control mb-2 filtro-fecha" placeholder="Hasta">
+          </div>`;
+        contenido += `<div class="checkbox-container" style="display: none;"></div>`;
+    }else if (divID === "divmes"){
+        contenido += `<label><strong>Seleccione Mes</strong></label>
+             <input type="month" class="form-control  mb-2 filtro-mes" data-target="${divID}" id="dateFilter">`;
+             contenido += `<div class="checkbox-container" style="display: none;"></div>`;
+
+
+    }else{
+        // **Para otros filtros, mostrar los checkboxes directamente**
+        contenido += `<label><strong>Seleccione:</strong></label>
+
+                      <div class="checkbox-container">`;
+        datos.forEach(item => {
+            contenido += `<div class="form-check">
+                            <input class="form-check-input filtro-escogido" data-tipo="${item.tipo}" data-descripcion="${item.description}" type="checkbox" id="chk_${item.cod}-${item.tipo}" value="${item.cod}">
+                            <label class="form-check-label checkbox-label" for="chk_${item.cod}-${item.tipo}">${item.description}</label>
+                          </div>`;
+        });
+        contenido += `</div>`;
+    }
 
     $(`#${divID}`).html(contenido);
 
     // **Guardar los datos en un atributo del div**
     $(`#${divID}`).data("datos", datos);
+
+           // Detectar cambios en los filtros
+
+    }
+
+
+    function cargarFiltrobusqueda(divID, datos) {
+        if (!datos || datos.length === 0) {
+            $(`#${divID}`).html("<p>No hay datos disponibles</p>");
+            return;
+        }
+    
+        let contenido = "";
+    
+        // **Agregar input de búsqueda solo en Estudiantes y Destinatarios**
+            contenido += `<input type="text" class="form-control mb-2 filtro-busqueda" 
+                          placeholder="Buscar..." data-target="${divID}">`;
+            contenido += `<div class="checkbox-container" style="display: none;"></div>`;
+        
+    
+        $(`#${divID}`).html(contenido);
+    
+        // **Guardar los datos en un atributo del div**
+        $(`#${divID}`).data("datos", datos);
+    
+               // Detectar cambios en los filtros
+    
+        }
+
+
+
+function obtenerFiltrosSeleccionados() {
+    return $(".filtro-escogido:checked").map(function () {
+        return { valor: $(this).val(), tipo: $(this).data("tipo") };
+    }).get();
+} 
+
+
+  
+  function actualizarListaFiltros(valor, descripcion, tipo, agregar) {
+    let listaFiltros = $("#listaFiltros");
+    if (agregar) {
+        listaFiltros.append(`<li class="filtro-item" data-value="${valor}" data-tipo="${tipo}">
+            <b>${descripcion}:</b> ${tipo} 
+            <button class="btn btn-outline-danger btn-sm btn-eliminar">❌</button>
+        </li>`);
+    } else {
+        listaFiltros.find(`li[data-value='${valor}']`).remove();
+    }
+    $("#btnLimpiarFiltros").toggle(listaFiltros.children().length > 0);
+  }
+
+  function filtrarCheckboxesFecha(input) {
+    let filtro = input.val().toLowerCase(); // Obtener el valor del input en minúsculas
+    let contenedorID = input.data("target"); // Obtener el ID del contenedor asociado
+    let contenedor = $(`#${contenedorID} .checkbox-container`);
+    let tipo = input.data("tipo");
+    // Si el input está vacío, limpiar el contenedor y salir
+    if (!filtro) {
+        contenedor.empty().hide();
+        return;
+    }
+
+
+    // Generar checkbox dinámico
+    let contenido = `
+        <div class="form-check">
+            <input class="form-check-input filtro-escogido" 
+                data-tipo="${contenedorID}-${tipo}" 
+                data-descripcion="${filtro}" 
+                type="checkbox"  
+                value="${filtro}" 
+                id="chk_${filtro}">
+            <label class="form-check-label checkbox-label" for="chk_${filtro}">
+                ${filtro}
+            </label>
+        </div>
+    `;
+
+    // Agregar checkbox si no existe ya en el contenedor
+    if ($(`#chk_${filtro}`).length === 0) {
+        contenedor.append(contenido).show();
+    }
 }
 
 
-function filtrarChecksearch(input) {
+
+  function filtrarCheckboxes(input) {
+    let filtro = input.val().toLowerCase();
+    let contenedorID = input.data("target");
+    let contenedor = $(`#${contenedorID} .checkbox-container`);
+    let datos = $(`#${contenedorID}`).data("datos");
+  
+    if (filtro === "") {
+        contenedor.html("").hide();
+        return;
+    }
+  
+    let resultado = datos.filter(item => item.description.toLowerCase().includes(filtro));
+    let contenido = resultado.map(item => `
+        <div class="form-check">
+            <input class="form-check-input filtro-escogido" data-tipo="${item.tipo}" data-descripcion="${item.description}" type="checkbox" id="chk_${item.cod}" value="${item.cod}">
+            <label class="form-check-label checkbox-label" for="chk_${item.cod}">${item.description}</label>
+        </div>
+    `).join("");
+  
+    contenedor.html(contenido).toggle(contenido !== "");
+  }
+
+  function filtrarChecksearch(input) {
     let filtro = input.val().toLowerCase();
     let contenedorID = input.data("target");
     let contenedor = $(`#${contenedorID} .checkbox-container`);
@@ -40,11 +171,12 @@ function filtrarChecksearch(input) {
     `).join("");
   
     contenedor.html(contenido).toggle(contenido !== "");
-}
+  }
 
 
 
-function consultadestinatario(id) {
+
+  function consultadestinatario(id) {
     getdestin(id).done(function(response) {
         let destinatarios = response["response"];
         if (!destinatarios || destinatarios.length === 0) {
@@ -134,7 +266,7 @@ function classTipeMessage (Type) {
 function recipient_replacement(tipo_mensaje,codigo){
     $("#titleModalLarge").text(" Cambio de destinatario" );
     $("#bodyTagLarge").children().remove();
-    $("#bodyTagLarge").load("views/adminView/modalUpdateDestin.html?v=1.2", function () {
+    $("#bodyTagLarge").load("views/adminView/modalUpdateDestin.html?v=1.0", function () {
         consultadestinatario(codigo)
         buscardestinata(tipo_mensaje,codigo,"selectdestint");
         $("#btnModalLarge").removeClass("d-none");
@@ -282,7 +414,7 @@ function createCardReassing (div,data,img) {
     return new Promise((resolve, reject) => {
         try {
             var image = (img == "")?"SIN FOTO":"data:image/jpeg;base64,"+img.foto;
-            $(`${div}`).load("views/TempleteReassing.html?v=1.2", function(){
+            $(`${div}`).load("views/TempleteReassing.html?v=1.0", function(){
                 const container = $(this);
                 var classT = classTipeMessage (data.Tipo_Mensaje);
                 container.find("#student-img").attr("src",image)
@@ -321,7 +453,7 @@ function createCardToAnswer(div, dataList, img) {
         try {
             $(div).html(""); 
             const image = (img == "") ? "SIN FOTO" : "data:image/jpeg;base64," + img.foto;
-            $.get("views/TempleteToAnswer.html?v=1.2", function (templateHtml) {
+            $.get("views/TempleteToAnswer.html?v=1.0", function (templateHtml) {
                 const $template = $(templateHtml);
                 const $header = $template.find(".d-flex.align-items-start").clone();
                 const $body = $template.find(".card-body .mensajeBody").clone();
@@ -510,7 +642,7 @@ function createCardComplaints(div, dataList, img) {
             $(div).html(""); 
             const image = (img == "") ? "SIN FOTO" : "data:image/jpeg;base64," + img.foto;
         
-            $.get("views/TempleteComplaints.html?v=1.2", async function (templateHtml) {
+            $.get("views/TempleteComplaints.html?v=1.0", async function (templateHtml) {
                 const $template = $(templateHtml);
                 const $card = $('<div class="card shadow-lg border-0 rounded-4 overflow-hidden mb-3 list-group my-3"></div>');
                 const $header = $template.find(".d-flex.align-items-start").clone();
@@ -580,7 +712,7 @@ function createCardComplaints(div, dataList, img) {
                     $bodytwo.find("#text-complaints").text(motivoQueja);
                     $bodytwo.find("#date-gestion").text(diferenciaFecha);
                     
-                    const { cod_nivel_satifaccion,nivel_satisfaccion,fecha_satistaccion, coment_satistaccion, cod_nivel_satifaccionII,nivel_satisfaccionII,fecha_satistaccionII,coment_satistaccionII } = dataList[0];
+                    const { cod_nivel_satifaccion,nivel_satisfaccion,fecha_satistaccion, coment_satistaccion, cod_nivel_satifaccionII,fecha_satistaccionII,coment_satistaccionII } = dataList[0];
                     if (cod_nivel_satifaccion === '2' || cod_nivel_satifaccion === '3') {
                         $bodytwo.find(".rowSatisfactionI").addClass('d-none');
                     } else {
@@ -596,7 +728,7 @@ function createCardComplaints(div, dataList, img) {
                             } else if (cod_nivel_satifaccionII !== '0') {
                                 $bodytwo.find(".rowSatisfactionII").removeClass('d-none');
                                 const typeIconoII = icono(dataList[0], 2);
-                                $bodytwo.find("#satisfactionII").html(`${typeIconoII} ${nivel_satisfaccionII}`);
+                                $bodytwo.find("#satisfactionII").html(`${typeIconoII} ${nivel_satisfaccion}`);
                                 $bodytwo.find("#date-SatisfactionII").text(fecha_satistaccionII);
                                 $bodytwo.find("#coment-SatisfactionII").text(coment_satistaccionII);
                             }
@@ -608,6 +740,8 @@ function createCardComplaints(div, dataList, img) {
 
                     // Esto es para el comentario del coordinador
                     if(dataList[0].coment_calidad != 0 || dataList[0].coment_calidad != "") {
+                        /* $bodytwo.find("#coment-Calidad").attr('disabled','disabled'); 
+                        $bodytwo.find("#btn-comment").attr('disabled','disabled');  */
                         $bodytwo.find("#coment-Calidad").val(dataList[0].coment_calidad); 
                     }
                     
@@ -722,72 +856,71 @@ function saveReassing(num,type,motivo){
 	});
 }
 
-async function btnUpdateState(object, id, estado_dest, tipojust = "", contexto = "QUEJA") {
-    try {
-        var style = '" position: relative; padding: 15px 10px 30px 10px;"';
-        var buttonupdate = "<div class='text-center' id='div" + id + "' style=" + style + ">";
-        var num = parseInt(atob(id));
+function btnUpdateState(object, id, estado_dest, tipojust = "", contexto = "QUEJA") {
+    var style = '" position: relative; padding: 15px 10px 30px 10px;"';
+    var buttonupdate = "<div class='text-center' id='div" + id + "' style=" + style + ">";
+    var num = parseInt(atob(id));
 
-    
-        //var viewFn = contexto === "QUEJA" ? "ViewNewsQuejas()" : "ViewNewsMessag()";
-        var modalFn = contexto === "QUEJA" ? "modalMessaQuej" : "modalVistMessage";
-        var modalTramiteFn = contexto === "QUEJA" ? "modalQuejas" : "modalVistMessage";
+   
+    var viewFn = contexto === "QUEJA" ? "ViewNewsQuejas()" : "ViewNewsMessag()";
+    var modalFn = contexto === "QUEJA" ? "modalMessaQuej" : "modalVistMessage";
+    var modalTramiteFn = contexto === "QUEJA" ? "modalQuejas" : "modalVistMessage";
 
-        if (object === "ENVIADO" || (object === "REDIRIGIDO" && estado_dest == 1) || (object === "EN TRAMITE" && estado_dest == 1)) {
-            var respos = await sendMessage(num)
-           console.log(respos);
-            //eval(viewFn); // ejecuta la función según el contexto
+    if (object === "ENVIADO" || (object === "REDIRIGIDO" && estado_dest == 1) || (object === "EN TRAMITE" && estado_dest == 1)) {
+        sendMessage(num).done(function (response) {
+            console.log(response);
+        }).fail(function (response) {
+            console.log(response);
+        });
+        eval(viewFn); // ejecuta la función según el contexto
 
-            buttonupdate += "<button type='button' id='btnEstado' class='btn btn'><i class='fa fa-eye fa-sm'></i> Enviado</button>";
-        }
-        else if (object === "CONSULTADO") {
-            buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' onclick='${modalFn}(${num})' 
-                            style='text-decoration: none;' id='btnEstado'>
-                            <i class='fa fa-eye fa-sm'></i> CONSULTADO <br> PENDIENTE <br> POR RESPONDER</button>`;
-        }
-        else if (object === "EN TRAMITE") {
-            if (estado_dest == 7 || (contexto === "MENSAJE" && estado_dest == 4)) {
-                buttonupdate += "<button class='btn btn-link text-dark bg-opacity-25' type='button' disabled id='btnEstado' style='text-decoration: none;'> <i class='fa fa-pen-to-square fa-lg'></i> EN TRAMITE/<br> CERRADO</button>";
+        buttonupdate += "<button type='button' id='btnEstado' class='btn btn'><i class='fa fa-eye fa-sm'></i> Enviado</button>";
+    }
+    else if (object === "CONSULTADO") {
+        buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' onclick='${modalFn}(${num})' 
+                         style='text-decoration: none;' id='btnEstado'>
+                         <i class='fa fa-eye fa-sm'></i> CONSULTADO <br> PENDIENTE <br> POR RESPONDER</button>`;
+    }
+    else if (object === "EN TRAMITE") {
+        if (estado_dest == 7 || (contexto === "MENSAJE" && estado_dest == 4)) {
+            buttonupdate += "<button class='btn btn-link text-dark bg-opacity-25' type='button' disabled id='btnEstado' style='text-decoration: none;'> <i class='fa fa-pen-to-square fa-lg'></i> EN TRAMITE/<br> CERRADO</button>";
+        } else {
+            if (contexto === "QUEJA" && tipojust === "Justificado") {
+                buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' onclick='${modalTramiteFn}(${num})' style='text-decoration: none;'>
+                                 <i class='fa fa-pen-to-square fa-lg'></i> EN TRAMITE</button>`;
             } else {
-                if (contexto === "QUEJA" && tipojust === "Justificado") {
-                    buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' onclick='${modalTramiteFn}(${num})' style='text-decoration: none;'>
-                                    <i class='fa fa-pen-to-square fa-lg'></i> EN TRAMITE</button>`;
-                } else {
-                    buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' onclick='${modalFn}(${num})' style='text-decoration: none;'>
-                                    <i class='fa fa-pen-to-square fa-lg'></i> EN TRAMITE <br> PENDIENTE <br> POR RESPONDER</button>`;
-                }
+                buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' onclick='${modalFn}(${num})' style='text-decoration: none;'>
+                                 <i class='fa fa-pen-to-square fa-lg'></i> EN TRAMITE <br> PENDIENTE <br> POR RESPONDER</button>`;
             }
         }
-        else if (object === "TRAMITADO") {
-            buttonupdate += "<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' disabled style='text-decoration: none;'><i class='fa fa-check-circle fa-lg'></i> TRAMITADO</button>";
-        }
-        else if (object === "REDIRIGIDO") {
-            buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' disabled style='text-decoration: none;'>
-                            <i class='fa fa-reply-all fa-lg'></i> REDIRIGIDO</button>`;
-        }
-        else if (object === "REDIRECCIONADO") {
-            buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' onclick='${modalFn}(${num})' style='text-decoration: none;'>
-                            <i class='fa fa-undo fa-lg'></i> TRAMITADO</button>`;
-        }
-        else if (contexto === "MENSAJE" && object === "ENVIADO REDIRECCIÓNADO" && estado_dest == 7) {
-            buttonupdate += "<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' disabled style='text-decoration: none;'><i class='fa fa-undo fa-lg'></i> EN TRAMITE</button>";
-        }
-        else {
-            let modalOtro = contexto === "QUEJA" ? "modalMessaQuej" : "modalVistMessa";
-            buttonupdate += `<button type='button' onclick='${modalOtro}(${num})' id='btnEstado' class='btn btn'><i class='fa fa-eye fa-sm'></i> Otro</button>`;
-        }
-        buttonupdate += "</div>";
-        return buttonupdate;
-    } catch (error) {
-        console.error(error);
     }
+    else if (object === "TRAMITADO") {
+        buttonupdate += "<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' disabled style='text-decoration: none;'><i class='fa fa-check-circle fa-lg'></i> TRAMITADO</button>";
+    }
+    else if (object === "REDIRIGIDO") {
+        buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' disabled style='text-decoration: none;'>
+                         <i class='fa fa-reply-all fa-lg'></i> REDIRIGIDO</button>`;
+    }
+    else if (object === "REDIRECCIONADO") {
+        buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' onclick='${modalFn}(${num})' style='text-decoration: none;'>
+                         <i class='fa fa-undo fa-lg'></i> TRAMITADO</button>`;
+    }
+    else if (contexto === "MENSAJE" && object === "ENVIADO REDIRECCIÓNADO" && estado_dest == 7) {
+        buttonupdate += "<button class='btn btn-link text-dark bg-opacity-25' type='button' id='btnEstado' disabled style='text-decoration: none;'><i class='fa fa-undo fa-lg'></i> EN TRAMITE</button>";
+    }
+    else {
+        let modalOtro = contexto === "QUEJA" ? "modalMessaQuej" : "modalVistMessa";
+        buttonupdate += `<button type='button' onclick='${modalOtro}(${num})' id='btnEstado' class='btn btn'><i class='fa fa-eye fa-sm'></i> Otro</button>`;
+    }
+    buttonupdate += "</div>";
+    return buttonupdate;
 }
 
 function openModal(objectMessage, type) {
     // Configuración según el tipo
     let config = {
         mensajes: {
-            view: "views/adminView/modalMesages.html?v=1.2",
+            view: "views/adminView/modalMesages.html?v=1.0",
             resultFn: (num, desc) => resultMessages(num, desc),
             afterSave: () => ViewNewsMessag(),
             validate: () => {
@@ -799,7 +932,7 @@ function openModal(objectMessage, type) {
             }
         },
         quejas: {
-            view: "views/adminView/modalQuejas.html?v=1.2",
+            view: "views/adminView/modalQuejas.html?v=1.0",
             resultFn: (num, desc, just) => resultQueja(num, desc, just),
             afterSave: () => ViewNewsQuejas(),
             validate: () => {

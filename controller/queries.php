@@ -37,15 +37,9 @@
 		try {
 			$link = conectar_db($base);
 			$result = [];
-			$id = $_SESSION["id"];
+			//$type = isset($type) ? $type : null;
+
 			$filter_ = ($type == 'reasignar')?' MR.estado_mensaje = 5':(($type == 'contestar')?' MS.cod_state in(1,2)':($type == 'quejas'? ' MR.estado_mensaje in(1,2,3) and MR.tipo_asunto = 6':'MR.cod_mensaje ='.$type.' ' ));
-			if($id == '3018') {
-				$filter_  =$filter_.' AND U.id_grado <= 4  ';
-			}elseif ($id == '120546') {
-				$filter_  =$filter_.' AND U.id_grado BETWEEN 4 AND 8 ';
-			}elseif ($id == '31001' || $id == '120550') {
-				$filter_  =$filter_.' AND U.id_grado BETWEEN 9 AND 14 ';
-			}
 			$procedure = "SELECT IF(MR.tipo_asunto = 6, 'Queja', 'Mensaje') AS Tipo_Mensaje,
 							MR.cod_mensaje,MR.proceso_redir AS cod_proceso_redir, MT.descripcion AS Tema,
 							CONCAT(U.nombres, ' ', U.apellidos) AS Estudiante,U.id,
@@ -74,16 +68,8 @@
 							LEFT JOIN mensajes_asuntos AS MA ON MA.id_asunto = MT.id_asunto
 							LEFT JOIN mensajes_tipo_justificacion as J ON J.cod_tipo = MR.tipo_justificado
 							LEFT JOIN mensajes_nivel_satifacción AS N ON N.cod_nivel = MR.NIvel_satisfaccion
-							INNER JOIN (
-								SELECT cod_mensaje, MAX(MD.fecha_registro) AS ultimo_registro
-								FROM mensajes_destinatarios MD
-								GROUP BY cod_mensaje
-							) ult ON ult.cod_mensaje = MR.cod_mensaje AND ult.ultimo_registro = MD.fecha_registro
 							WHERE $filter_
-							ORDER BY MR.fecha_registro ASC"; 
-
-
-
+							ORDER BY MR.fecha_registro ASC";
 							
 			// Ejecutar consulta
 			$query = mysql_query($procedure, $link);
@@ -141,18 +127,11 @@
 		try {
 			$link = conectar_db($base);
 			$result = [];
-			$id = $_SESSION["id"];
+
 			$type = isset($page) ? $page : 1;
-			$FilterPag_ = $type * 50;
-			if($id == '3018') {
-				$filter_  =' WHERE U.id_grado <= 4  ';
-			}elseif ($id == '120546') {
-				$filter_  =' WHERE U.id_grado BETWEEN 4 AND 8 ';
-			}elseif ($id == '31001' || $id == '120550') {
-				$filter_  =' WHERE U.id_grado BETWEEN 9 AND 14 ';
-			}else {
-				$filter_ = "WHERE 1=1";
-			}
+			
+			
+			$Filter_ = $type * 50;
 			$procedure = "SELECT IF(MR.tipo_asunto = 6, 'Queja', 'Mensaje') AS Tipo_Mensaje,
 							MR.cod_mensaje,MR.proceso_redir AS cod_proceso_redir, MT.descripcion AS Tema,
 							CONCAT(U.nombres, ' ', U.apellidos) AS Estudiante,U.id,
@@ -181,18 +160,22 @@
 							LEFT JOIN mensajes_asuntos AS MA ON MA.id_asunto = MT.id_asunto
 							LEFT JOIN mensajes_tipo_justificacion as J ON J.cod_tipo = MR.tipo_justificado
 							LEFT JOIN mensajes_nivel_satifacción AS N ON N.cod_nivel = MR.NIvel_satisfaccion
-							$filter_ 
+							
 							ORDER BY MR.fecha_registro DESC
-							LIMIT 50 OFFSET $FilterPag_";
+							LIMIT 50 OFFSET $Filter_";
 							
 			// Ejecutar consulta
 			$query = mysql_query($procedure, $link);
+			
 			if (mysql_num_rows($query) == 0) {
 				return json_encode(array('code' => 404, 'response' => 'No se encontraron datos'));
 			}
+	
 			// Recoger resultados
 			while ($data = mysql_fetch_assoc($query)) {
 				$tip_mensa = ($data["Tipo_Mensaje"]=="Mensaje")?1:2;
+				
+
 				array_push($result, array(
 					"Cod_Tipo_Mensaje" => $tip_mensa,
 					"Tipo_Mensaje" => $data["Tipo_Mensaje"],
@@ -237,23 +220,8 @@
 		try {
 			$link = conectar_db($base);
 			$result = array();
-			$id = $_SESSION["id"];
-			$filter_ = "";
-			$filter = "";
-			if($id == '3018') {
-				$filter_  =' AND U.id_grado <= 4 ';
-				$filter  =' WHERE U.id_grado <= 4  ';
-			}elseif ($id == '120546') {
-				$filter_  =' AND U.id_grado BETWEEN 4 AND 8 ';
-				$filter  =' WHERE U.id_grado BETWEEN 4 AND 8  ';
-			}elseif ($id == '31001' || $id == '120550') {
-				$filter_  =' AND U.id_grado BETWEEN 9 AND 14 ';
-				$filter  =' WHERE U.id_grado BETWEEN 9 AND 14 ';
-			}else {
-				$filter = 'WHERE 1=1';
-			}
-			$produce = "SELECT COUNT(*) AS total_Mensajes, (SELECT COUNT(*) AS quejas FROM mensajes_registrados as m INNER JOIN usuarios as U on U.id = m.id_estudiante WHERE m.tipo_asunto = 6 $filter_) AS total_tipo_quejas, (SELECT COUNT(*) AS mensaje FROM mensajes_registrados as m INNER JOIN usuarios as U on U.id = m.id_estudiante  WHERE m.tipo_asunto != 6 $filter_) AS total_tipo_mensaje
-						FROM mensajes_registrados as m INNER JOIN usuarios as U on U.id = m.id_estudiante $filter";
+			$produce = "SELECT COUNT(*) AS total_Mensajes, (SELECT COUNT(*) AS quejas FROM `mensajes_registrados` WHERE tipo_asunto = 6) AS total_tipo_quejas, (SELECT COUNT(*) AS mensaje FROM `mensajes_registrados` WHERE tipo_asunto != 6) AS total_tipo_mensaje
+						FROM `mensajes_registrados`";
 			$query = mysql_query($produce,$link);
 			if (mysql_num_rows($query) == 0) {
 				mysql_close($query);
@@ -271,11 +239,15 @@
 
 	function get_quejas_anter($base) {
 		try {
+
 			// Conectar a la base de datos
 			$anio_pasado = date("Y") - 1;
+
 			$link = conectar_db($base.$anio_pasado);
 			mysql_set_charset('utf8', $link);
+
 			$result = array();
+	
 			// Consulta base
 			$procedure = "SELECT MT.descripcion AS Tema , MP.proceso, MR.mensaje ,MR.fecha_registro AS Fecha_Envio ,MONTH(MR.fecha_registro) AS MES,
 				 CONCAT(U.apellidos,' ',U.nombres) AS Estudiante,
@@ -304,7 +276,9 @@
                             left join mensajes_circulares AS MC1 ON MC1.cod_mensaje = MR.cod_mensaje 
             LEFT JOIN mensajes_circulares AS MC2 ON MR.cod_mensaje = MC2.cod_mensaje AND MC1.cod <> MC2.cod
 				WHERE 1=1 AND MR.tipo_mensaje=2"; 
-
+	
+			
+	
 			// Imprimir la consulta para depuración
 			/* echo "<pre>$procedure</pre>"; 
 	 */
@@ -344,6 +318,9 @@
 					"FechaCircular2" => $data["Fecha2"],
 					"SatisfaccionCirc2" => $data["Satisfaccion2"],
 					"ComentariosCirc2" => $data["Comentarios2"],
+
+
+
 				));
 			}
 	
@@ -372,7 +349,10 @@
             LEFT JOIN  mensajes_temas AS MT ON MT.id_tema = MTD.cod_tema
             LEFT JOIN mensajes_procesos AS MP ON MP.cod = MT.proceso
 			WHERE U.id_estado = 1 AND U.id_tipo_usuario IN (1,3,4,5,6,8,9,10,12,13,34,23)ORDER BY nombre ASC";
+
+
 				$procedure = mysql_query($query, $link);
+
 				if (mysql_num_rows($procedure) > 0) {
 					while ($data = mysql_fetch_assoc($procedure)) {
 						if ($data["proceso"] == null) {
@@ -386,6 +366,8 @@
 								$proceso = $data["proceso"];
 								$cod = $data["cod_proceso"];
 							}
+							
+							
 							
 						}else{
 							$proceso = $data["proceso"];
@@ -414,6 +396,7 @@
 	        $link = conectar_db($base);
 	        mysql_set_charset('utf8',$link);
 	        $result = array();
+	        
 	        $query = "SELECT U.id, CONCAT(U.apellidos, ' ', U.nombres) AS nombre, 
 			TU.descripcion FROM usuarios AS U INNER JOIN tipo_usuario AS TU ON TU.id_tipo_usuario = U.id_tipo_usuario 
 			WHERE U.id_estado = 1 AND U.id=$destid";
@@ -441,9 +424,12 @@
 	        $id = $_SESSION["id"];
 	        $procedure = "SELECT id,id_perfil FROM `usuarios` WHERE id=$id"; 
 	        $query = mysql_query($procedure,$link);
+         
 	        if(mysql_num_rows($query)>0){
 	            while($data = mysql_fetch_assoc($query)){
-					array_push($result,array("id"=>$data['id'],"id_perfil"=>$data['id_perfil']));	
+	        
+					array_push($result,array("id"=>$data['id'],"id_perfil"=>$data['id_perfil']));
+	             	
 	            }
 	        }
 	        mysql_close($link);
@@ -478,6 +464,7 @@
          	return array('code'=>500,'response'=>$error);
      	}
 	}
+
 
 	/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 														Modulo de Mensajes 2025 Modulo de Mensajes
@@ -836,7 +823,7 @@
 			$link = conectar_db($base);
 			$result =array();
 			$id_person = $_SESSION["id"];
-			$query_ = "CALL Actualizar_state_mensaje('$id_person','$message')";
+			$query_ = "CALL Actualizar_state_mensaje($id_person,$message );";
 			$query = mysql_query($query_,$link);
 
 			if (mysql_affected_rows() > 0) {
@@ -1904,10 +1891,14 @@
 
 	
 	function insertFilter($base,$filtros, $page, $limit) {
+		
 		$offset = ($page - 1) * $limit;
+
 		try {
 			$link = conectar_db($base);
 			$result = [];
+			//$type = isset($type) ? $type : null;
+			
 			if (is_string($filtros)) {
 				$filtros = json_decode($filtros, true);
 			}
@@ -2025,16 +2016,7 @@
 				}
 			}
 
-			if (isset($_SESSION["id"])) {
-				$idUsuario = $_SESSION["id"];
-				if ($idUsuario == '3018') {
-					$condiciones[] = "U.id_grado <= 4";
-				} elseif ($idUsuario == '120546') {
-					$condiciones[] = "U.id_grado BETWEEN 4 AND 8";
-				} elseif ($idUsuario == '31001' || $idUsuario == '120550') {
-					$condiciones[] = "U.id_grado BETWEEN 9 AND 14";
-				}
-			}
+			
 
 			$whereClause = count($condiciones) > 0 ? implode(" AND ", $condiciones) : "1=1";
 			$procedure = "SELECT IF(MR.tipo_asunto = 6, 'Queja', 'Mensaje') AS Tipo_Mensaje,
