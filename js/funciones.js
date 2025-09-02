@@ -134,7 +134,7 @@ function classTipeMessage (Type) {
 function recipient_replacement(tipo_mensaje,codigo){
     $("#titleModalLarge").text(" Cambio de destinatario" );
     $("#bodyTagLarge").children().remove();
-    $("#bodyTagLarge").load("views/adminView/modalUpdateDestin.html?v=1.3", function () {
+    $("#bodyTagLarge").load("views/adminView/modalUpdateDestin.html?v=3.1", function () {
         consultadestinatario(codigo)
         buscardestinata(tipo_mensaje,codigo,"selectdestint");
         $("#btnModalLarge").removeClass("d-none");
@@ -282,7 +282,7 @@ function createCardReassing (div,data,img) {
     return new Promise((resolve, reject) => {
         try {
             var image = (img == "")?"SIN FOTO":"data:image/jpeg;base64,"+img.foto;
-            $(`${div}`).load("views/TempleteReassing.html?v=1.3", function(){
+            $(`${div}`).load("views/TempleteReassing.html?v=3.1", function(){
                 const container = $(this);
                 var classT = classTipeMessage (data.Tipo_Mensaje);
                 container.find("#student-img").attr("src",image)
@@ -321,7 +321,7 @@ function createCardToAnswer(div, dataList, img) {
         try {
             $(div).html(""); 
             const image = (img == "") ? "SIN FOTO" : "data:image/jpeg;base64," + img.foto;
-            $.get("views/TempleteToAnswer.html?v=1.3", function (templateHtml) {
+            $.get("views/TempleteToAnswer.html?v=3.1", function (templateHtml) {
                 const $template = $(templateHtml);
                 const $header = $template.find(".d-flex.align-items-start").clone();
                 const $body = $template.find(".card-body .mensajeBody").clone();
@@ -510,7 +510,7 @@ function createCardComplaints(div, dataList, img) {
             $(div).html(""); 
             const image = (img == "") ? "SIN FOTO" : "data:image/jpeg;base64," + img.foto;
         
-            $.get("views/TempleteComplaints.html?v=1.3", async function (templateHtml) {
+            $.get("views/TempleteComplaints.html?v=3.1", async function (templateHtml) {
                 const $template = $(templateHtml);
                 const $card = $('<div class="card shadow-lg border-0 rounded-4 overflow-hidden mb-3 list-group my-3"></div>');
                 const $header = $template.find(".d-flex.align-items-start").clone();
@@ -674,7 +674,7 @@ function validationReassing(num,type){
 		}
         saveReassing(num,type,motivo);
 		switch (type) {
-			case 'mensaje':
+			case 'MENSAJE':
 				ViewNewsMessag();
 				break;
 			case 'queja':
@@ -706,7 +706,7 @@ function saveReassing(num,type,motivo){
 		}
 	})
     switch (type) {
-        case 'mensaje':
+        case 'MENSAJE':
             ViewNewsMessag();
             break;
         case 'queja':
@@ -787,7 +787,7 @@ function openModal(objectMessage, type) {
     // Configuración según el tipo
     let config = {
         mensajes: {
-            view: "views/adminView/modalMesages.html?v=1.3",
+            view: "views/adminView/modalMesages.html?v=3.1",
             resultFn: (num, desc) => resultMessages(num, desc),
             afterSave: () => ViewNewsMessag(),
             validate: () => {
@@ -799,7 +799,7 @@ function openModal(objectMessage, type) {
             }
         },
         quejas: {
-            view: "views/adminView/modalQuejas.html?v=1.3",
+            view: "views/adminView/modalQuejas.html?v=3.1",
             resultFn: (num, desc, just) => resultQueja(num, desc, just),
             afterSave: () => ViewNewsQuejas(),
             validate: () => {
@@ -841,7 +841,7 @@ function openModal(objectMessage, type) {
                 console.log(response);
                 if (response["code"] == 200) {
                     $("#ModalLargeObs").modal("hide");
-                    cargartoast("Ejecución", "Se registró la respuesta correctamente");
+                    //cargartoast("Ejecución", "Se registró la respuesta correctamente");
                     config.afterSave();
                 } else if (response["response"]?.["code"] == 450) {
                     alert("Su sesión ha caducado. Vuelva a ingresar, gracias");
@@ -874,12 +874,15 @@ function btnUpdateState(object, id, estado_dest, tipojust = "", contexto = "QUEJ
 
         if (object === "ENVIADO" || (object === "REDIRIGIDO" && estado_dest == 1) || (object === "EN TRAMITE" && estado_dest == 1)) {
             var respos = sendMessage(num)
-            $when(respos).done(function (event){
+            $.when(respos).done(function (event){
             console.log(event);
             })
             //eval(viewFn); // ejecuta la función según el contexto
 
-            buttonupdate += "<button type='button' id='btnEstado' class='btn btn'><i class='fa fa-eye fa-sm'></i> Enviado</button>";
+            //buttonupdate += "<button type='button' id='btnEstado' class='btn btn'><i class='fa fa-eye fa-sm'></i> Enviado</button>";
+            buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' onclick='${modalFn}(${num})' 
+                            style='text-decoration: none;' id='btnEstado'>
+                            <i class='fa fa-eye fa-sm'></i> CONSULTADO <br> PENDIENTE <br> POR RESPONDER</button>`;
         }
         else if (object === "CONSULTADO") {
             buttonupdate += `<button class='btn btn-link text-dark bg-opacity-25' type='button' onclick='${modalFn}(${num})' 

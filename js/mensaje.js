@@ -120,6 +120,7 @@ function createTable1(id,array_,sections=false){
 				var text = "";
 				if(key_ == 'Redirigir' ){
 					if(estado_m ==1 ||  estado_m ==2 || estado_m == 8){
+						clase =  colorState(value_);
 						text = btnReassingHtml(value_,data,'MENSAJE');
 						value_="";
 					}
@@ -156,9 +157,9 @@ function btnReassingHtml(object,id,type){
 
 function colorState(object){
 	var clases = "";
-	if(object=="Enviado" ){
-		clases = ""
-	}else if (object=="CONSULTADO" ){
+	if(object=="ENVIADO" ){
+		clases = "bg-warning p-2 text-dark bg-opacity-25"
+	}else if (object=="CONSULTADO"){
 		clases = "bg-warning p-2 text-dark bg-opacity-25"
 	}else if(object=="EN TRAMITE" ){
 		clases = "bg-info p-2 text-dark bg-opacity-25"
